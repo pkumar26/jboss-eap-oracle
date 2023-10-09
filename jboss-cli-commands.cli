@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+module add --name=com.oracle --resources=/home/site/deployments/tools/ojdbc8.jar --module-xml=/home/site/deployments/tools/module.xml
+/subsystem=datasources/jdbc-driver=oracle:add(driver-name="oracle",driver-module-name="com.oracle",driver-class-name="oracle.jdbc.OracleDriver",driver-xa-datasource-class-name="oracle.jdbc.xa.client.OracleXADataSource")
+data-source add --driver-name="oracle" --name="oracleDS" --jndi-name="java:jboss/datasources/oracleDS" --connection-url="jdbc:oracle:thin:@<servername>:1521:<dbname>" --user-name="<dbuser>" --password="<dbpassword>" --validate-on-match=true --background-validation=false --valid-connection-checker-class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker" --exception-sorter-class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleExceptionSorter"
+
+# print data sources
+/subsystem=datasources:read-resource
